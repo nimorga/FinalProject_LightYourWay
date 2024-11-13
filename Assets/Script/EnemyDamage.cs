@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_Sideways : MonoBehaviour
+public class EnemyDamage : MonoBehaviour
 {
     [Header ("Enemy")]
     [SerializeField] private float damage;
