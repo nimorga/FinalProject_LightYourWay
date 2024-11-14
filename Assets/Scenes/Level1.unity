@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  durationWHileRed: 0.5
+  durationWHileRed: 1
   damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &705507993
 GameObject:
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  durationWHileRed: 0.5
+  durationWHileRed: 1
   damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &2326326616449653101
 PrefabInstance:
