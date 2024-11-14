@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Health : MonoBehaviour
         {
             // player dead
             StartCoroutine(Invunerability()); // this will be replaced by a game over screen most likely
+            SceneManager.LoadScene("GameOver");
         }
     }
 

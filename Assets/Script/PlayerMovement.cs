@@ -22,13 +22,13 @@ public class PlayerMovement : MonoBehaviour
             //Adjust wand
             if (direction > 0)//Right
             {
+                wand.localPosition = new Vector3(wandOffset, -wandSetY, 0); 
                 wand.localRotation = Quaternion.Euler(0, 0, 90); //Rotate 90
-                wand.localPosition = new Vector3(wandOffset, -wandSetY, 0); //Move wand
             }
             else//Left
             {
-                wand.localRotation = Quaternion.Euler(0, 0, -90); //Rotate 90
                 wand.localPosition = new Vector3(wandOffset, -wandSetY , 0); //Move wand
+                wand.localRotation = Quaternion.Euler(0, 0, -90); //Rotate 90
             }
         }
     }
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
         else{
-            ResetWandPosition();
+             ResetWandPosition();
         }
         // Jump logic
         if (Input.GetKey(KeyCode.Space) && cooldownTimer > jumpCooldown)
