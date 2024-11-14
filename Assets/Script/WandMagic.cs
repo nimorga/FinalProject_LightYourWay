@@ -4,54 +4,52 @@ using UnityEngine;
 
 public class WandMagic : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
     public GameObject magicPrefab;
     public Transform wand;
     public float magicSpeed = 10f;
     public float destroyTime = 0.5f;
-    private float horizontalInput;
+    public float attackCooldown;
+    private float cooldownTimer;
+    
+    // Store the last direction the player pressed
+    private Vector2 lastDirection = Vector2.right; // Default to right (D key)
 
-    // Update is called once per frame
     void Update()
     {
-        //Get the horizontal input for movement
-        horizontalInput = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.E)){
-            ShootMagic();
+        // Check for direction key presses
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            lastDirection = Vector2.left; // If 'A' is pressed, the last direction is left
         }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            lastDirection = Vector2.right; // If 'D' is pressed, the last direction is right
+        }
+
+        // If the player presses 'E' and the cooldown is over, shoot in the last direction
+        if (Input.GetKeyDown(KeyCode.E) && cooldownTimer >= attackCooldown)
+        {
+            ShootMagic(lastDirection);
+            cooldownTimer = 0f; // Reset the cooldown timer
+        }
+
+        // Increment cooldown timer
+        cooldownTimer += Time.deltaTime;
     }
 
-    void ShootMagic()
+    void ShootMagic(Vector2 direction)
     {
         if (magicPrefab != null && wand != null)
         {
-            //Prefab at the wand's position and rotation
             GameObject magic = Instantiate(magicPrefab, wand.position, wand.rotation);
-            Rigidbody2D rb = magic.GetComponent<Rigidbody2D>();//Get 2D projectile
+            Rigidbody2D rb = magic.GetComponent<Rigidbody2D>();
 
             if (rb != null)
             {
-                rb.gravityScale = 0f;//to prevent gravity
-                Vector2 magicDirection;
-
-                //Check direction
-                if (horizontalInput > 0){
-                    magicDirection = Vector2.right;
-                }
-                else if (horizontalInput < 0){
-                    magicDirection = Vector2.left;
-                }
-                else{
-                    magicDirection = Vector2.right;
-                }
-                rb.velocity = magicDirection * magicSpeed;//Move the magic projectile in the calculated direction
-
-                //Destroy the magic
+                rb.gravityScale = 0f;
+                rb.velocity = direction * magicSpeed; // Shoot the magic in the last remembered direction
                 Destroy(magic, destroyTime);
             }
         }
     }
 }
-
-
-
