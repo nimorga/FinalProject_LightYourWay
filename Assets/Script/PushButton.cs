@@ -6,17 +6,25 @@ using TMPro;
 
 public class PushButton : MonoBehaviour
 {
+    public string retryScene;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    public void StartGame(){
+        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+    }
+
     public void OnRetryButton()
     {
-        SceneManager.LoadScene("Level1");
-
+        if(!string.IsNullOrEmpty(Health.lastScene)){
+            SceneManager.LoadScene(Health.lastScene, LoadSceneMode.Single);
+            }
     }
+
     public void OnReturnButton()
     {
         SceneManager.LoadScene("TitleScreen");

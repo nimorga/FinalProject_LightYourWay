@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
     [SerializeField] private int numberOfFlashes;
     private SpriteRenderer spriteRend;
 
+    public static string lastScene;
+
     private void Awake() 
     {
         currentHealth = startingHealth;
@@ -33,6 +35,7 @@ public class Health : MonoBehaviour
         {
             // player dead
             StartCoroutine(Invunerability()); // this will be replaced by a game over screen most likely
+            lastScene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene("GameOver");
         }
     }
