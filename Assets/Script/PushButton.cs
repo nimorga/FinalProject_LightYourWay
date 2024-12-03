@@ -15,18 +15,28 @@ public class PushButton : MonoBehaviour
     }
 
     public void StartGame(){
+        Time.timeScale = 1;
         SceneManager.LoadScene("Level1", LoadSceneMode.Single);
     }
 
     public void OnRetryButton()
     {
         if(!string.IsNullOrEmpty(Health.lastScene)){
+            Time.timeScale = 1;
             SceneManager.LoadScene(Health.lastScene, LoadSceneMode.Single);
+
+            Collider[] colliders = FindObjectsOfType<Collider>();
+            foreach(var collider in colliders){
+                collider.enabled = true;
+            }
+            Physics.SyncTransforms();
+
             }
     }
 
     public void OnReturnButton()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("TitleScreen");
 
     }

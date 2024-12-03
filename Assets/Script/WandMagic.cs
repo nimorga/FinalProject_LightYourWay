@@ -17,11 +17,11 @@ public class WandMagic : MonoBehaviour
     void Update()
     {
         // Check for direction key presses
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             lastDirection = Vector2.left; // If 'A' is pressed, the last direction is left
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.RightArrow))
         {
             lastDirection = Vector2.right; // If 'D' is pressed, the last direction is right
         }

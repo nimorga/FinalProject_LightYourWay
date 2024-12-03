@@ -293,7 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   leftAndRightEdge: 8
-  changeDirChance: 0
+  changeDirChance: 0.01
 --- !u!114 &352152388
 MonoBehaviour:
   m_ObjectHideFlags: 0

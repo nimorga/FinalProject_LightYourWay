@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TimerLevel : MonoBehaviour
 {
     public Text surviveText;
+    public Slider timerBar;
     private float displayTime = 5f; // Display directions
     private float countDownTime = 60f; // Survive for a min
     private bool isFadingText = false;
@@ -18,6 +19,12 @@ public class TimerLevel : MonoBehaviour
         // To show text and fadeout text
         surviveText.gameObject.SetActive(true);
         surviveText.canvasRenderer.SetAlpha(1.0f);
+
+        if(timerBar != null){
+            timerBar.maxValue = countDownTime;
+            timerBar.value = countDownTime;
+        }
+
         StartCoroutine(FadeOutText());
     }
 
@@ -25,6 +32,12 @@ public class TimerLevel : MonoBehaviour
     void Update()
     {
         countDownTime -= Time.deltaTime;
+
+        //Update the bar on screen 
+        if(timerBar != null){
+            timerBar.value = countDownTime;
+        }
+
         if (countDownTime <= 0)
         {
             SceneManager.LoadScene("WinScreen");
