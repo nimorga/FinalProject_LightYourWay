@@ -14,9 +14,9 @@ public class Health : MonoBehaviour
     [SerializeField] private int numberOfFlashes;
     private SpriteRenderer spriteRend;
 
-    public static string lastScene;
+    public static string lastScene;//I dont think this is being used anymore
 
-    private void Awake() 
+    private void Awake() //Make sure the current health upon loading is the starting health
     {
         currentHealth = startingHealth;
         spriteRend = GetComponent<SpriteRenderer>();
@@ -24,6 +24,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float _damage) 
     {
+        if (currentHealth <= 0) return;
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
 
         if (currentHealth > 0)
@@ -34,7 +35,7 @@ public class Health : MonoBehaviour
         else
         {
             // player dead
-            StartCoroutine(Invunerability()); // this will be replaced by a game over screen most likely
+            //StartCoroutine(Invunerability()); // this will be replaced by a game over screen most likely
             lastScene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene("GameOver");
         }
@@ -52,5 +53,16 @@ public class Health : MonoBehaviour
             yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes));
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
+    }
+    private void OnEnable()
+    {
+        //Health is reset when the scene reloads
+        currentHealth = startingHealth;
+    }
+
+    private void OnDisable()
+    {
+        //stop all coroutines when the object disabled
+        StopAllCoroutines();
     }
 }

@@ -8,9 +8,9 @@ public class TimerLevel : MonoBehaviour
 {
     public Text surviveText;
     public Slider timerBar;
-    private float displayTime = 5f; // Display directions
-    private float countDownTime = 60f; // Survive for a min
-    private bool isFadingText = false;
+    private float displayTime = 5f; //Display directions
+    private float countDownTime = 60f; //Survive for a min
+    //private bool isFadingText = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class TimerLevel : MonoBehaviour
         surviveText.gameObject.SetActive(true);
         surviveText.canvasRenderer.SetAlpha(1.0f);
 
-        if(timerBar != null){
+        if(timerBar != null){// Initialize time bar
             timerBar.maxValue = countDownTime;
             timerBar.value = countDownTime;
         }
@@ -40,7 +40,7 @@ public class TimerLevel : MonoBehaviour
 
         if (countDownTime <= 0)
         {
-            SceneManager.LoadScene("WinScreen");
+            SceneManager.LoadScene("WinScreen");//Win screen if pass 60 sec :P
         }
     }
 

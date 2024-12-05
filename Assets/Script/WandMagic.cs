@@ -11,19 +11,19 @@ public class WandMagic : MonoBehaviour
     public float attackCooldown;
     private float cooldownTimer;
     
-    // Store the last direction the player pressed
+    //Store the last direction the player pressed
     private Vector2 lastDirection = Vector2.right; // Default to right (D key)
 
     void Update()
     {
-        // Check for direction key presses
+        //Check for direction key presses
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            lastDirection = Vector2.left; // If 'A' is pressed, the last direction is left
+            lastDirection = Vector2.left; //A and left arrow shoot left
         }
         else if (Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.RightArrow))
         {
-            lastDirection = Vector2.right; // If 'D' is pressed, the last direction is right
+            lastDirection = Vector2.right; //D and right arrow shoot right
         }
 
         // If the player presses 'E' and the cooldown is over, shoot in the last direction
@@ -41,13 +41,19 @@ public class WandMagic : MonoBehaviour
     {
         if (magicPrefab != null && wand != null)
         {
-            GameObject magic = Instantiate(magicPrefab, wand.position, wand.rotation);
+            GameObject magic = Instantiate(magicPrefab, wand.position, wand.rotation);//Create wand location to follow for player
             Rigidbody2D rb = magic.GetComponent<Rigidbody2D>();
 
             if (rb != null)
             {
+                AudioSource magicAudio = magic.GetComponent<AudioSource>();//Added audio of shooting
+
+                if (magicAudio != null)
+                {
+                    magicAudio.Play(); //Play the audio whenshot
+                }
                 rb.gravityScale = 0f;
-                rb.velocity = direction * magicSpeed; // Shoot the magic in the last remembered direction
+                rb.velocity = direction * magicSpeed; //Magic in last direction moved
                 Destroy(magic, destroyTime);
             }
         }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Spawn enemies for level 2
 public class SpawnE1 : MonoBehaviour
 {
     public GameObject enemyPrefab;
@@ -12,7 +12,7 @@ public class SpawnE1 : MonoBehaviour
     void Start()
     {   
         SpawnEnemy();
-        timerEnemy = spawnTime;// 1sec per
+        timerEnemy = spawnTime;//1sec per
     }
 
     void Update()
