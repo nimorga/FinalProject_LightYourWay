@@ -1,72 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Include for using legacy Text component
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class NarrativeHandler : MonoBehaviour
 {
-    public List<SpriteRenderer> sprites; //Sprite list :P
-    public List<Text> textLines; //List of of text
+    public List<GameObject> gameObjects; //List of GameObjects
+    public List<Text> textLines; //List of text
     public float fadeDuration = 1f; 
-    public float delayBetweenSprites = 1f; 
+    public float delayBetweenObjects = 1f; 
 
     private void Start()
     {
-        DisableSpritesAndText(); //All pics and text disable on start
-        StartCoroutine(FadeInSpritesAndText());
+        DisableGameObjectsAndText(); //Disable all GameObjects and text on start
+        StartCoroutine(FadeInGameObjectsAndText());
     }
 
     private void Update()
     {
-        //If spacebar pressed start game
-        if (Input.GetKeyDown(KeyCode.Space)){
+        //Start game if the spacebar is pressed
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             SceneManager.LoadScene("Level1"); 
         }
     }
 
-    private void DisableSpritesAndText()
-    {
-        //Invisible sprites using sprite render
-        foreach (var spriteRenderer in sprites){
-            spriteRenderer.enabled = false;
+    private void DisableGameObjectsAndText(){
+        //Disable all GameObjects and set text invisible
+        foreach (var obj in gameObjects){
+            obj.SetActive(false);
         }
         foreach (var text in textLines){
             Color color = text.color;
-            color.a = 0f; //0 = invisible
+            color.a = 0f; // 0 = invisible
             text.color = color;
         }
     }
 
-    private IEnumerator FadeInSpritesAndText()
+    private IEnumerator FadeInGameObjectsAndText()
     {
-        for (int i = 0; i < sprites.Count; i++) //For each sprite in list
+        for (int i = 0; i < gameObjects.Count; i++) //Each GameObject in the list
         {
-            //Enable sprite and text before display
-            sprites[i].enabled = true;
+            //Enable both to true
+            gameObjects[i].SetActive(true);
             textLines[i].gameObject.SetActive(true);
 
-            //Fade them in
-            Color spriteColor = sprites[i].color;
-            spriteColor.a = 0f;
-            sprites[i].color = spriteColor;
+            //Fade in text and display gameobject
             Color textColor = textLines[i].color;
             textColor.a = 0f;
             textLines[i].color = textColor;
 
             float timeElapsed = 0f;
-            while (timeElapsed < fadeDuration) //make sure they excute on time
+            while (timeElapsed < fadeDuration) //Make sure the time lines up
             {
                 timeElapsed += Time.deltaTime;
                 float alphaValue = Mathf.Clamp01(timeElapsed / fadeDuration);
 
-                spriteColor.a = alphaValue;
-                sprites[i].color = spriteColor;
                 textColor.a = alphaValue;
                 textLines[i].color = textColor;
+
                 yield return null;
             }
-            yield return new WaitForSeconds(delayBetweenSprites);//Delay sprite by 1 sec
+
+            yield return new WaitForSeconds(delayBetweenObjects); //Delay between GameObjects
         }
     }
 }
